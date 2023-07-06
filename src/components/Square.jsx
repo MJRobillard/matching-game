@@ -8,9 +8,13 @@ export default function Square(props) {
 
   let roundedClass;
   if (props.loc === 0) {
-    roundedClass = "rounded-tl-lg";
+    roundedClass = "rounded-tl-sm";
   } else if (props.loc === 2) {
-    roundedClass = "rounded-tr-lg";
+    roundedClass = "rounded-tr-sm";
+  } else if (props.loc === 6) {
+    roundedClass = "rounded-bl-sm";
+  } else if (props.loc === 8) {
+    roundedClass = "rounded-br-sm";
   } else {
     roundedClass = "";
   }
