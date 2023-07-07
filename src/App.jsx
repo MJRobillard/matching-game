@@ -6,9 +6,12 @@ function App() {
   // 9 numbers
   // 
   return (
-   <div className='flex justify-center items-center h-screen bg-zinc-800 font-mono'>
+   <div className='relative flex justify-center items-center h-screen bg-zinc-800 font-mono'>
      <Main/>
-    
+          
+     <a href='https://github.com/ramdedomo' className="absolute bottom-0 hover:text-zinc-700 text-xs text-zinc-600 py-5" align="center">
+        Ram Dedomo 2023
+      </a>
    </div>
   )
 }

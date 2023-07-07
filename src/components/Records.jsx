@@ -1,4 +1,5 @@
-export default function Records() {
+export default function Records(props) {
+
   return (
     <div className="w-48 border border-zinc-700 flex flex-col h-72 rounded-sm">
       <div className="text-white bg-zinc-700 px-2 py-2 text-center rounded-t-sm flex justify-center items-center gap-2">
@@ -18,24 +19,25 @@ export default function Records() {
         </svg>{" "}
         Records
       </div>
-      <div className="text-white text-center overflow-y-auto">
-        <div className="border border-zinc-600 py-1 px-2 hover:border-emerald-600 flex justify-between bg-zinc-500 bg-opacity-0">
-          <p>12/12/23</p>
-          <p>23s</p>
-        </div>
-        <div className="border border-zinc-600 py-1 px-2 hover:border-emerald-600 flex justify-between bg-zinc-500 bg-opacity-10">
-          <p>12/12/23</p>
-          <p>23s</p>
-        </div>
-        <div className="border border-zinc-600 py-1 px-2 hover:border-emerald-600 flex justify-between bg-zinc-500 bg-opacity-20">
-          <p>12/12/23</p>
-          <p>23s</p>
-        </div>
-        <div className="border border-zinc-600 py-1 px-2 hover:border-emerald-600 flex justify-between bg-zinc-500 bg-opacity-30">
-          <p>12/12/23</p>
-          <p>23s</p>
-        </div>
+      
+      {
+        props.listRecords.length ? 
+        <div className="text-white text-center overflow-y-auto">
+        {
+          props.listRecords.map(data => {
+              return (
+              <div key={data.id} className="border border-zinc-600 py-1 px-2 hover:border-emerald-600 flex justify-between bg-zinc-500 bg-opacity-0">
+                <p>{data.date}</p>
+                <p className="text-emerald-500 font-semibold">{data.time/100}s</p>
+              </div>
+              )
+          })
+        }
+      </div> : <div className="justify-center align-center flex my-5 text-white text-xs text-opacity-10">
+        No records found
       </div>
+      }
+
     </div>
   );
 }

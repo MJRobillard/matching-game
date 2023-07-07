@@ -10,6 +10,18 @@ export default function Main() {
   const [won, setWon] = useState(false);
   const [start, setStart] = useState(false);
   const [count, setCount] = useState(0);
+  const [records, setRecords] = useState(
+    JSON.parse(localStorage.getItem("matching-game") || "[]")
+  );
+
+  const date = new Date();
+  const formattedDate = date.toLocaleString("en-US", {
+    month: "numeric",
+    day: "numeric",
+    hour: "numeric",
+    minute: "numeric",
+    hour12: false,
+  });
 
   function randomNumber() {
     let newSquares = [];
@@ -44,10 +56,16 @@ export default function Main() {
     for (let index = 0; index < squares.length; index++) {
       if (currentVal === squares[index].number && squares[index].isEnabled) {
         currentVal === squares[index].number;
-        if (squares.length === index + 1) {
+        if (squares.length === index + 1 && !won) {
           setWon(true);
           setStart(false);
-          console.log("Congrats");
+
+          let newRecords = [
+            ...records,
+            { id: nanoid(), time: count, date: formattedDate },
+          ];
+          localStorage.setItem("matching-game", JSON.stringify(newRecords));
+          setRecords(newRecords);
         }
       } else {
         break;
@@ -74,27 +92,37 @@ export default function Main() {
     });
   }
 
-  function handleKeyPress(event) {
-    if (event.key === "r") {
-      randomizeSquares();
-    }
-  }
-
   useEffect(() => {
-    window.addEventListener("keydown", handleKeyPress);
+    window.addEventListener("keydown", (event) => {
+      event.key === "r" && randomizeSquares();
+    });
   }, []);
 
   return (
     <div className="flex flex-col gap-2">
-      <div className="flex gap-2 justify-center">
-        <Records />
+      <div className="relative flex gap-2 justify-center">
+        <p className="absolute -top-10 text-xs text-zinc-600 text-center">
+          Match the number's base with the corresponding number on the right.
+          Once you tap a number, the timer will start.
+        </p>
+        <Records listRecords={records} />
         {won ? (
-          <div className="w-72 bg-zinc-100 bg-opacity-5 flex justify-center items-center rounded-sm">
+          <div className="relative w-72 bg-zinc-100 bg-opacity-5 flex flex-col justify-center items-center rounded-sm">
             <div className=" text-white flex items-center gap-1">
               <p>Time:</p>
               <div className=" bg-emerald-600 px-2  rounded-md">
-              {count / 100}
+                {count / 100}
               </div>
+            </div>
+            <div className="bottom-0 my-2 text-xs absolute text-zinc-100 text-opacity-20">
+              click{" "}
+              <span
+                onClick={resetAll}
+                className="text-emerald-600 cursor-pointer"
+              >
+                reset
+              </span>{" "}
+              to continue
             </div>
           </div>
         ) : (
@@ -122,12 +150,20 @@ export default function Main() {
           selectedNo={selectedNo}
         />
       </div>
-      <button
-        onClick={randomizeSquares}
-        className=" bg-zinc-700 border py-1 rounded-sm border-zinc-600 hover:bg-zinc-600 focus:border focus:border-zinc-500 text-white  h-1/2"
-      >
-        Roll <span className="text-[10px]">(or press R)</span>
-      </button>
+      <div className="flex gap-2">
+        <div className="w-48">asd</div>
+        <button
+          onClick={randomizeSquares}
+          className=" bg-zinc-700 w-72 border py-1 rounded-sm border-zinc-600 hover:bg-zinc-600 focus:border focus:border-zinc-500 text-white  h-1/2"
+        >
+          Roll <span className="text-[10px]">(or press R)</span>
+        </button>
+       <select name="" className="w-48 border bg-zinc-700 py-1 px-2 rounded-sm border-zinc-600 hover:bg-zinc-600 focus:border focus:border-zinc-500 text-white" id="">
+            <option value="">Numbers</option>
+            <option value="">Emojis</option>
+            <option value="">Letters</option>
+       </select>
+      </div>
     </div>
   );
 }
