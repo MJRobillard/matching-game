@@ -14,6 +14,8 @@ export default function Main() {
     JSON.parse(localStorage.getItem("matching-game") || "[]")
   );
 
+  const [autoWin, setAutoWin] = useState(false)
+    
   const date = new Date();
   const formattedDate = date.toLocaleString("en-US", {
     month: "numeric",
@@ -92,6 +94,10 @@ export default function Main() {
     });
   }
 
+  function toggleAuto(){
+    setAutoWin(oldData => !oldData)
+  }
+
   useEffect(() => {
     window.addEventListener("keydown", (event) => {
       event.key === "r" && randomizeSquares();
@@ -101,9 +107,9 @@ export default function Main() {
   return (
     <div className="flex flex-col gap-2">
       <div className="relative flex gap-2 justify-center">
-        <p className="absolute -top-10 text-xs text-zinc-600 text-center">
-          Match the number's base with the corresponding number on the right.
-          Once you tap a number, the timer will start.
+        <p className="absolute -top-8 text-xs text-zinc-600 text-center">
+          Match the number's equal to the number on the right.
+          The timer will start, once you tap a number.
         </p>
         <Records listRecords={records} />
         {won ? (
@@ -111,7 +117,7 @@ export default function Main() {
             <div className=" text-white flex items-center gap-1">
               <p>Time:</p>
               <div className=" bg-emerald-600 px-2  rounded-md">
-                {count / 100}
+                {count / 100}s
               </div>
             </div>
             <div className="bottom-0 my-2 text-xs absolute text-zinc-100 text-opacity-20">
@@ -126,7 +132,7 @@ export default function Main() {
             </div>
           </div>
         ) : (
-          <div className="grid grid-cols-3 border-white border rounded-sm">
+          <div className={`grid grid-cols-3 ${autoWin ? 'border-emerald-500' : 'border-white'} border rounded-sm`}>
             {squares.map((data) => {
               return (
                 <Square
@@ -151,7 +157,10 @@ export default function Main() {
         />
       </div>
       <div className="flex gap-2">
-        <div className="w-48">asd</div>
+        <div className="w-48 flex gap-2 items-center justify-center text-white">
+          <input onChange={toggleAuto} type="checkbox" name="" id="auto" /> 
+          <label htmlFor="auto" className="text-xs">Auto Tap Last Number</label>
+        </div>
         <button
           onClick={randomizeSquares}
           className=" bg-zinc-700 w-72 border py-1 rounded-sm border-zinc-600 hover:bg-zinc-600 focus:border focus:border-zinc-500 text-white  h-1/2"

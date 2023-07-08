@@ -30,8 +30,9 @@ export default function Combo(props) {
             d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"
           />
         </svg>
-        {(props.count / 100).toFixed(2)}
+        {(props.count / 100).toFixed(2)}s
       </div>
+      
 
       <div className="h-[76%] flex items-center justify-center bg-zinc-100 bg-opacity-5">
         <div className=" text-white text-8xl">{props.selectedNo}</div>

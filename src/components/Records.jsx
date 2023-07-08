@@ -2,7 +2,7 @@ export default function Records(props) {
 
   return (
     <div className="w-48 border border-zinc-700 flex flex-col h-72 rounded-sm">
-      <div className="text-white bg-zinc-700 px-2 py-2 text-center rounded-t-sm flex justify-center items-center gap-2">
+      <div className="text-white bg-zinc-700 px-2 py-1 text-center rounded-t-sm flex justify-center items-center gap-2">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
