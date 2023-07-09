@@ -54,25 +54,32 @@ export default function Main() {
   }
 
   useEffect(() => {
-    let currentVal = squares[0].number;
-    for (let index = 0; index < squares.length; index++) {
-      if (currentVal === squares[index].number && squares[index].isEnabled) {
-        currentVal === squares[index].number;
-        if (squares.length === index + 1 && !won) {
-          setWon(true);
-          setStart(false);
-
-          let newRecords = [
-            ...records,
-            { id: nanoid(), time: count, date: formattedDate },
-          ];
-          localStorage.setItem("matching-game", JSON.stringify(newRecords));
-          setRecords(newRecords);
-        }
-      } else {
-        break;
+    const checkWin = squares.every(data => data.isEnabled) // check every property isEnabled, return boolean
+    const remainingFalse = squares.filter(data => !data.isEnabled) // get remaining false squares
+    
+    // check if theres only one left and Auto Tap is Enabled and Selected number is equal to last number
+    if(remainingFalse.length === 1 && autoWin && remainingFalse[0].number === selectedNo){
+      setWon(true);
+      setStart(false);
+      let newRecords = [
+        ...records,
+        { id: nanoid(), time: count, date: formattedDate },
+      ];
+      localStorage.setItem("matching-game", JSON.stringify(newRecords));
+      setRecords(newRecords);
+    }else{ // if Auto tap is not enabled checkWin will chech if all squares are true
+      if(checkWin){
+        setWon(true);
+        setStart(false);
+        let newRecords = [
+          ...records,
+          { id: nanoid(), time: count, date: formattedDate },
+        ];
+        localStorage.setItem("matching-game", JSON.stringify(newRecords));
+        setRecords(newRecords);
       }
     }
+
   }, [squares]);
 
   function resetAll() {
