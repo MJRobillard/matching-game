@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import square_styles from "./data/square_styles";
 
 export default function Combo(props) {
   useEffect(() => {
@@ -13,7 +14,9 @@ export default function Combo(props) {
   return (
     <div className="relative w-48 h-72">
       <div
-        className="h-[12%] bg-zinc-700 text-white rounded-t-sm py-1 flex justify-center items-center gap-1"
+        className={`h-[12%] ${
+          props.played ? "bg-emerald-700" : "bg-zinc-700"
+        } text-white rounded-t-sm py-1 flex justify-center items-center gap-1`}
         align="center"
       >
         <svg
@@ -32,10 +35,11 @@ export default function Combo(props) {
         </svg>
         {(props.count / 100).toFixed(2)}s
       </div>
-      
 
       <div className="h-[76%] flex items-center justify-center bg-zinc-100 bg-opacity-5">
-        <div className=" text-white text-8xl">{props.selectedNo}</div>
+        <div className=" text-white text-8xl">
+          {square_styles[props.selectedNo][props.style]}
+        </div>
       </div>
 
       <button
