@@ -194,12 +194,13 @@ export default function Main() {
         <select
         onChange={handleStyles}
           name="styles"
+          value={squareStyles}
           className="w-48 border bg-zinc-700 py-1 px-2 rounded-sm border-zinc-600 hover:bg-zinc-600 focus:border focus:border-zinc-500 text-white"
           id=""
         >
-          <option value="numbers">Numbers</option>
-          <option value="emojis">Emojis</option>
-          <option value="letters">Letters</option>
+          <option value="numbers">Numbers 1️⃣</option>
+          <option value="emojis">Emojis 🗿</option>
+          <option value="letters">Letters 🅰️</option>
         </select>
       </div>
     </div>
