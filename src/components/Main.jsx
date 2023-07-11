@@ -62,7 +62,8 @@ export default function Main() {
     if (
       remainingFalse.length === 1 &&
       autoWin &&
-      remainingFalse[0].number === selectedNo
+      remainingFalse[0].number === selectedNo &&
+      !won
     ) {
       setWon(true);
       setStart(false);
@@ -74,7 +75,7 @@ export default function Main() {
       setRecords(newRecords);
     } else {
       // if Auto tap is not enabled checkWin will chech if all squares are true
-      if (checkWin) {
+      if (checkWin && !won) {
         setWon(true);
         setStart(false);
         let newRecords = [
