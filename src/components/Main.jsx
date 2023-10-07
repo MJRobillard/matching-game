@@ -13,7 +13,7 @@ export default function Main() {
   const [records, setRecords] = useState(
     JSON.parse(localStorage.getItem("matching-game") || "[]")
   );
-  const [squareStyles, setSquareStyles] = useState("emojis");
+  const [squareStyles, setSquareStyles] = useState("numbers");
 
   const [autoWin, setAutoWin] = useState(false);
 
@@ -125,7 +125,7 @@ export default function Main() {
     <div className="flex flex-col gap-2">
       <div className="relative flex gap-2 justify-center">
         <p className="absolute -top-8 text-xs text-zinc-600 text-center">
-          Match the number's equal to the number on the right. The timer will
+          <strong>Note:</strong> Match the number's equal to the number on the right. The timer will
           start, once you tap a number.
         </p>
         <Records listRecords={records} />
