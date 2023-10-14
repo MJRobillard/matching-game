@@ -125,8 +125,8 @@ export default function Main() {
     <div className="flex flex-col gap-2">
       <div className="relative flex gap-2 justify-center">
         <p className="absolute -top-8 text-xs text-zinc-600 text-center">
-          <strong>Note:</strong> Match the number's equal to the number on the right. The timer will
-          start, once you tap a number.
+          <strong>Note:</strong> Match the {`${squareStyles}`}. The timer will
+          start, once you tap a box.
         </p>
         <Records listRecords={records} />
         {won ? (
