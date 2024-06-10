@@ -1,19 +1,13 @@
-import './App.css'
-import Main from './components/Main'
-import Records from './components/Records'
+import './App.css';
+import Main from './components/Main';
+
 function App() {
-  // Project:
-  // 9 numbers
-  // 
   return (
-   <div className='relative flex justify-center items-center h-screen bg-zinc-800 font-mono overflow-hidden'>
-     <Main/>
-          
-     <a href='https://ramdedomo.me' className="absolute bottom-0 hover:text-zinc-700 text-xs text-zinc-600 py-5" align="center">
-        ©️ Ram Dedomo 2023
-      </a>
-   </div>
-  )
+    <div className='relative flex flex-col justify-center items-center min-h-screen bg-zinc-800 font-mono overflow-hidden'>
+      <Main />
+
+    </div>
+  );
 }
 
-export default App
+export default App;

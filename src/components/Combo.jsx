@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import square_styles from "./data/square_styles";
-
+import englishSpanish from "./data/spanish_dic";
 export default function Combo(props) {
   useEffect(() => {
     if (props.played) {
@@ -10,6 +10,18 @@ export default function Combo(props) {
       return () => clearInterval(interval);
     }
   }, [props.played, props.count]);
+  function seededRandom(seed) {
+    let x = Math.sin(seed) * 10000;
+    return x - Math.floor(x);
+  }
+  function getRandomBinary() {
+    const randomValue = seededRandom(props.number);
+    return randomValue < 0.5 ? 0 : 1;
+  }
+  // Assuming `data` variable in your code is `props`
+  console.log(englishSpanish[0][props.selectedNo]);
+  console.log(englishSpanish[1][props.number]);
+
 
   return (
     <div className="relative w-48 h-72">
@@ -33,12 +45,13 @@ export default function Combo(props) {
             d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"
           />
         </svg>
-        {(props.count / 100).toFixed(2)}s
+        {(props.count / 100).toFixed(2)}
       </div>
 
-      <div className="h-[76%] flex items-center justify-center bg-zinc-100 bg-opacity-5">
-        <div className=" text-white text-8xl">
-          {square_styles[props.selectedNo][props.style]}
+      <div className="h-[76%] flex items-center justify-center bg-zinc-2 bg-opacity-5">
+        <div className=" text-white text-2xl">
+          {englishSpanish[getRandomBinary()][props.selectedNo]}
+
         </div>
       </div>
 

@@ -1,4 +1,5 @@
-import square_styles from "./data/square_styles";
+import squareStyles from "./data/square_styles";
+import englishSpanish from "./data/spanish_dic";
 
 export default function Square(props) {
   let styles = props.enabled
@@ -20,12 +21,23 @@ export default function Square(props) {
     roundedClass = "";
   }
 
+  function seededRandom(seed) {
+    let x = Math.sin(seed) * 10000;
+    return x - Math.floor(x);
+  }
+  function getRandomBinary() {
+    const randomValue = seededRandom(props.loc);
+    return randomValue < 0.5 ? 0 : 1;
+  }
+  // Assuming `data` variable in your code is `props`
+
+
   return (
     <div
       onClick={props.handleToggle}
-      className={`${styles} ${roundedClass} first-letter:h-24 w-24 flex items-center justify-center text-4xl text-white cursor-pointer`}
+      className={`${styles} ${roundedClass} h-24 w-24 sm:h-32 sm:w-32 flex items-center justify-center text-1xl sm:text-2xl text-white cursor-pointer`}
     >
-      {square_styles[props.number][props.style]}
+      {englishSpanish[getRandomBinary()][props.number]}
     </div>
   );
 }

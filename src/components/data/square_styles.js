@@ -1,3 +1,8 @@
+import englishToSpanishDictionary from "./spanish_dic";
+
+  
+
+
 export default [
     {},
     {
@@ -30,6 +35,23 @@ export default [
         numbers: '6',
         letters: 'F',
     },
+    {
+        emojis: '🤡',
+        numbers: '7',
+        letters: 'Fire',
+    },
+    {
+        emojis: '🤡',
+        numbers: '8',
+        letters: 'Fuego',
+    },
+    {
+        emojis: '🤡',
+        numbers: '9',
+        letters: 'F',
+    },
+    
+    
 ]
 
   

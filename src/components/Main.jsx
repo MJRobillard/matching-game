@@ -3,10 +3,14 @@ import Combo from "./Combo";
 import Records from "./Records";
 import Square from "./Square";
 import { nanoid } from "nanoid";
+import englishSpanish from "./data/spanish_dic";
+
+
+const total = 9;
 
 export default function Main() {
   const [squares, setSquare] = useState(randomNumber());
-  const [selectedNo, setSelectedNo] = useState(Math.ceil(Math.random() * 6));
+  const [selectedNo, setSelectedNo] = useState(Math.ceil(Math.random() * total));
   const [won, setWon] = useState(false);
   const [start, setStart] = useState(false);
   const [count, setCount] = useState(0);
@@ -32,13 +36,12 @@ export default function Main() {
       newSquares.push({
         id: nanoid(),
         location: index,
-        number: Math.ceil(Math.random() * 6),
+        number: Math.ceil(Math.random() * total),
         isEnabled: false,
       });
     }
     return newSquares;
   }
-
   function toggleSquare(id) {
     setStart(true);
     setSquare((oldData) => {
@@ -52,13 +55,18 @@ export default function Main() {
         };
       });
     });
+  
+    // Reset the word to match without resetting the grid
+    const enabledNumbers = squares.filter((data) => !data.isEnabled);
+    console.log(enabledNumbers,'look;');
+    const random_num = Math.floor(Math.random() * enabledNumbers.length)
+    setSelectedNo(enabledNumbers[random_num].number)
   }
 
   useEffect(() => {
-    const checkWin = squares.every((data) => data.isEnabled); // check every property isEnabled, return boolean
-    const remainingFalse = squares.filter((data) => !data.isEnabled); // get remaining false squares
+    const checkWin = squares.every((data) => data.isEnabled);
+    const remainingFalse = squares.filter((data) => !data.isEnabled);
 
-    // check if theres only one left and Auto Tap is Enabled and Selected number is equal to last number
     if (
       remainingFalse.length === 1 &&
       autoWin &&
@@ -74,7 +82,6 @@ export default function Main() {
       localStorage.setItem("matching-game", JSON.stringify(newRecords));
       setRecords(newRecords);
     } else {
-      // if Auto tap is not enabled checkWin will chech if all squares are true
       if (checkWin && !won) {
         setWon(true);
         setStart(false);
@@ -90,7 +97,7 @@ export default function Main() {
 
   function resetAll() {
     setSquare(randomNumber());
-    setSelectedNo(Math.ceil(Math.random() * 6));
+    setSelectedNo(Math.ceil(Math.random() * total));
     setWon(false);
     setStart(false);
     setCount(0);
@@ -101,7 +108,7 @@ export default function Main() {
       return oldData.map((data) => {
         return {
           ...data,
-          number: data.isEnabled ? data.number : Math.ceil(Math.random() * 6),
+          number: data.isEnabled ? data.number : Math.ceil(Math.random() * total),
         };
       });
     });
@@ -122,18 +129,18 @@ export default function Main() {
   }, []);
 
   return (
-    <div className="flex flex-col gap-2">
-      <div className="relative flex gap-2 justify-center">
+    <div className="flex flex-col gap-2 items-center">
+      <div className="relative flex flex-col gap-2 items-center">
         <p className="absolute -top-8 text-xs text-zinc-600 text-center">
           <strong>Note:</strong> Match the {`${squareStyles}`}. The timer will
-          start, once you tap a box.
+          start once you tap a box.
         </p>
         <Records listRecords={records} />
         {won ? (
-          <div className="relative w-72 bg-zinc-100 bg-opacity-5 flex flex-col justify-center items-center rounded-md">
+          <div className="relative w-60 sm:w-72 bg-zinc-100 bg-opacity-5 flex flex-col justify-center items-center rounded-md">
             <div className=" text-white flex items-center gap-1">
               <p>Time:</p>
-              <div className=" bg-emerald-600 px-2  rounded-md">
+              <div className=" bg-emerald-600 px-2 rounded-md">
                 {count / 100}s
               </div>
             </div>
@@ -150,10 +157,11 @@ export default function Main() {
           </div>
         ) : (
           <div
-            className={`grid grid-cols-3 ${
+            className={`grid grid-cols-3 gap-2 ${
               autoWin ? "border-emerald-500" : "border-white"
-            } border rounded-md`}
+            } border rounded-md p-2`}
           >
+
             {squares.map((data) => {
               return (
                 <Square
@@ -179,25 +187,24 @@ export default function Main() {
           selectedNo={selectedNo}
         />
       </div>
-      <div className="flex gap-2">
-        <div className="w-48 flex gap-2 items-center justify-center text-white">
-          <input onChange={toggleAuto} type="checkbox" name="" id="auto" />
+      <div className="flex flex-col gap-2 sm:flex-row">
+        <div className="w-full sm:w-48 flex gap-2 items-center justify-center text-white">
+          <input onChange={toggleAuto} type="checkbox" name="auto" id="auto" />
           <label htmlFor="auto" className="text-xs">
             Auto Tap Last Number
           </label>
         </div>
         <button
           onClick={randomizeSquares}
-          className=" bg-zinc-700 w-72 border py-1 rounded-sm border-zinc-600 hover:bg-zinc-600 focus:border focus:border-zinc-500 text-white  h-1/2"
+          className="bg-zinc-700 w-full sm:w-72 border py-1 rounded-sm border-zinc-600 hover:bg-zinc-600 focus:border focus:border-zinc-500 text-white"
         >
           Roll <span className="text-[10px]">(or press R)</span>
         </button>
         <select
-        onChange={handleStyles}
+          onChange={handleStyles}
           name="styles"
           value={squareStyles}
-          className="w-48 border bg-zinc-700 py-1 px-2 rounded-sm border-zinc-600 hover:bg-zinc-600 focus:border focus:border-zinc-500 text-white"
-          id=""
+          className="w-full sm:w-48 border bg-zinc-700 py-1 px-2 rounded-sm border-zinc-600 hover:bg-zinc-600 focus:border focus:border-zinc-500 text-white"
         >
           <option value="numbers">Numbers 1️⃣</option>
           <option value="emojis">Emojis 🗿</option>
